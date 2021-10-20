@@ -15,45 +15,83 @@ import model.User;
 
 public class ShoppingServlet extends HttpServlet {
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         
-        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
-        return;
+        String User = (String) session.getAttribute("username");
+        String action = request.getParameter("action");
+        
+        if(action != null) {
+            if(action.equals("logout")) {
+                session.invalidate();
+                response.sendRedirect("shoppingList");
+                return;
+            }
+        }
+        if(User != null) {
+               getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response);
+        return;     
+            }else {
+            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
+            return;
+        }
+        
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        //getting username from jsp
+        
+        
+        //getting username and action from jsp
         String Username = request.getParameter("user");
-        
-        //creating user and session object
-        User user = new User();
-        HttpSession session = request.getSession();
-        
-        //storing the username in an attribute
-        session.setAttribute("username", Username);
-        
-        //System.out.println(session.getAttribute(Username));
-        
-        String item = request.getParameter("itemAdd");
-        System.out.println("This is the item: " + item);
-        
-        //I do not understand how to ise
+        String action = request.getParameter("action");
         
         //login validaiton
         if(Username.equals("")){
             request.setAttribute("invalidEntry", true);
-        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
-        return;
+            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
+            return;
         }else {
+            
+        //creating user and session object
+        User user = new User();
+        HttpSession session = request.getSession();
         
-        getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response);
-        return; 
-        
+        if(action.equals("register")) {
+            String username = request.getParameter("user");
+            //storing the username in an attribute
+            session.setAttribute("username", username);
+            response.sendRedirect("shoppingList");
+            return;
         }
+        
+        if(action != null) {
+        if(action.equals("add")) {
+        } else {
+            System.out.println("it worked");
+        }
+        }
+        }
+        
+        
+        
+        
+        
+//        //login validaiton
+//        if(Username.equals("")){
+//            request.setAttribute("invalidEntry", true);
+//        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
+//        return;
+//        }else {
+//        
+//        getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response);
+//        return; 
+//        
+//        }
     }
 }
