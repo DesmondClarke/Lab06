@@ -12,14 +12,23 @@
         <title>List</title>
     </head>
     <body>
-         <form method="POST" action="add">
+        
+         
         <h1>Shopping List</h1>
-        <p>Hello, ${username} <a href="">Logout</a></p>
+        <p>Hello, ${username}</p>
+        <p><a href="shoppingList?action=logout">Logout</a></p>
         <h2>List</h2>
         <br>
-        <p>Add item:<input name="itemAdd"><button name="addButton" action="add">Add</button></p>
-         </form>
-        
+        <form method="POST" action="">
+            <input type="text" name="item"><input type="submit" value="Add Item">
+            <input type="hidden" name="action" value="add">
+        </form>
+        <form action="" method="post">
+            
+            
+            <input type="submit" value="Delete">
+            <input type="hidden" name="action" value="delete">
+        </form>
         
     </body>
 </html>

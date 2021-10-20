@@ -12,12 +12,12 @@
         <title>Shopping List</title>
     </head>
     <body>
-        <form method="POST" action="ShoppingServlet">
         <h1>Shopping List</h1>
-        <label>Username:</label>
-        <input name="user" type="text">
-        
-        <input type="submit" value="Register Name">
+        <form action="shoppingList" method="post">
+            <label>Username:</label>
+            <input name="user" type="text">
+            <input type="submit" value="Register">
+            <input type="hidden" name="action" value="register">
         </form>
         <c:if test="${invalidEntry}">
                 <p>invalid entry. Please try again</p>
