@@ -70,6 +70,7 @@ public class ShoppingServlet extends HttpServlet {
             return;
         }
         
+        
         if(action != null) {
         if(action.equals("add")) {
         } else {
