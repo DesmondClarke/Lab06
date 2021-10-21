@@ -44,19 +44,15 @@ public class ShoppingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
         ArrayList<String> itemArray = new ArrayList<>();
-
-        //getting username and action from jsp
+        String sessionUsername = (String) session.getAttribute("username");
         String Username = request.getParameter("user");
         String action = request.getParameter("action");
 
-        //creating user and session object
-        User user = new User();
-        HttpSession session = request.getSession();
 
         //login validaiton
-        if (Username.equals("")) {
+        if (Username == null || Username.equals("")) {
             request.setAttribute("invalidEntry", true);
             getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
             return;
@@ -67,14 +63,15 @@ public class ShoppingServlet extends HttpServlet {
                     itemArray.add(request.getParameter("item"));
                 }
             }
-            if(action.equals("delete")) {
-                
+            if (action.equals("delete")) {
+
             }
 
             if (action.equals("register")) {
                 String username = request.getParameter("user");
                 //storing the username in an attribute
                 session.setAttribute("username", username);
+                String u = (String) session.getAttribute("username");
                 response.sendRedirect("shoppingList");
                 return;
             }
