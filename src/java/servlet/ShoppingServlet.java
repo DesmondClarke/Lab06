@@ -50,23 +50,8 @@ public class ShoppingServlet extends HttpServlet {
         String Username = request.getParameter("user");
         String action = request.getParameter("action");
 
-
         //login validaiton
-        if (Username == null || Username.equals("")) {
-            request.setAttribute("invalidEntry", true);
-            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-            return;
-        }
-        if (action != null) {
-            if (action.equals("add")) {
-                if (request.getParameter("item") != null) {
-                    itemArray.add(request.getParameter("item"));
-                }
-            }
-            if (action.equals("delete")) {
-
-            }
-
+        if (sessionUsername == null || sessionUsername.equals("")) {
             if (action.equals("register")) {
                 String username = request.getParameter("user");
                 //storing the username in an attribute
@@ -76,18 +61,17 @@ public class ShoppingServlet extends HttpServlet {
                 return;
             }
         }
-
+        if (action != null) {
+            if (action.equals("add")) {
+                if (request.getParameter("item") != null) {
+                    itemArray.add(request.getParameter("item"));
+                    response.sendRedirect("shoppingList");
+                }
+            }
+            
+            if (action.equals("delete")) {
+                response.sendRedirect("shoppingList");
+            }
+        }
     }
-
-//        //login validaiton
-//        if(Username.equals("")){
-//            request.setAttribute("invalidEntry", true);
-//        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
-//        return;
-//        }else {
-//        
-//        getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request,response);
-//        return; 
-//        
-//        }
 }
